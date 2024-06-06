@@ -6,23 +6,47 @@ type BookType = {
   author: string;
   ISBN: string;
 };
+type BorrowerInfo = {
+  name: string;
+  email: string;
+};
 
 const permutationCity: BookType = {
   title: "Permutation City",
   author: "Greg Egan",
-  ISBN: generateISBN()
+  ISBN: "5584339617628"
+};
+const member = {
+  name: "Becca Peckman",
+  email: "rebeccapeckman@gmail.com"
 };
 
-async function 
-async function main() {
-  const book = await prisma.book.update({
+async function borrowBook(
+  { title, author, ISBN }: BookType,
+  { name, email }: BorrowerInfo
+) {
+  const renter = await prisma.member.findUnique({
     where: {
-      ISBN: "9169404807277"
-    },
-    data: {
-      RenterId: {}
+      Email: email
     }
   });
+  console.log(renter);
+
+  if (renter === null) throw new Error("Renter not found");
+
+  const borrow = await prisma.book.update({
+    where: {
+      ISBN: ISBN
+    },
+    data: {
+      RenterId: renter.id
+    }
+  });
+  console.log(borrow);
+}
+
+async function main() {
+  await borrowBook(permutationCity, member);
 }
 
 function generateISBN() {
