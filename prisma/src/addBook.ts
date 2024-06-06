@@ -7,9 +7,14 @@ async function main() {
       Title: "Permutation City",
       ISBN: generateISBN(),
       BookAuthor: {
-        create: {
-          Name: "Greg Egan",
-          Biography: "Aussie nerd"
+        connectOrCreate: {
+          where: {
+            Name: "Greg Egan"
+          },
+          create: {
+            Name: "Greg Egan",
+            Biography: "Aussie nerd"
+          }
         }
       }
     }
