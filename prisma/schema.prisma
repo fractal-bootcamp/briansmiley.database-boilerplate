@@ -40,7 +40,7 @@ model Genre {
 model Member {
   id      String @id @default(cuid())
   Name    String
-  Email   String
+  Email   String @unique
   Address String
   Book    Book[]
 }
