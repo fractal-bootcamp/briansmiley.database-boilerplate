@@ -16,15 +16,17 @@ datasource db {
 model Book {
   id         String      @id @default(cuid())
   Title      String
-  Author     Author      @relation(fields: [AuthorId], references: [id])
+  BookAuthor Author      @relation(fields: [AuthorId], references: [id])
   AuthorId   String
-  ISBN       Int
+  ISBN       String      @unique
   BookGenres BookGenre[]
+  Renter     Member?     @relation(fields: [RenterId], references: [id])
+  RenterId   String?
 }
 
 model Author {
   id        String @id @default(cuid())
-  Name      String
+  Name      String @unique
   Biography String
   Books     Book[]
 }
@@ -38,8 +40,9 @@ model Genre {
 model Member {
   id      String @id @default(cuid())
   Name    String
-  Email   String
+  Email   String @unique
   Address String
+  Book    Book[]
 }
 
 model BookGenre {
