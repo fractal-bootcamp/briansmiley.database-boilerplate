@@ -20,8 +20,8 @@ model Book {
   AuthorId   String
   ISBN       String
   BookGenres BookGenre[]
-  Renter     Member      @relation(fields: [RenterId], references: [id])
-  RenterId   String
+  Renter     Member?     @relation(fields: [RenterId], references: [id])
+  RenterId   String?
 }
 
 model Author {
