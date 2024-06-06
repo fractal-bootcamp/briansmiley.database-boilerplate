@@ -18,7 +18,7 @@ model Book {
   Title      String
   BookAuthor Author      @relation(fields: [AuthorId], references: [id])
   AuthorId   String
-  ISBN       String
+  ISBN       String      @unique
   BookGenres BookGenre[]
   Renter     Member?     @relation(fields: [RenterId], references: [id])
   RenterId   String?
