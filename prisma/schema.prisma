@@ -26,7 +26,7 @@ model Book {
 
 model Author {
   id        String @id @default(cuid())
-  Name      String
+  Name      String @unique
   Biography String
   Books     Book[]
 }
