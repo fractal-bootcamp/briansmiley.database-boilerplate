@@ -14,13 +14,14 @@ datasource db {
 }
 
 model Book {
-  id          String        @id @default(cuid())
-  Title       String
-  Author      Author        @relation(fields: [AuthorId], references: [id])
-  AuthorId    String
-  ISBN        Int
-  BookGenres  BookGenre[]
-  BookRentals BookRentals[]
+  id         String      @id @default(cuid())
+  Title      String
+  BookAuthor Author      @relation(fields: [AuthorId], references: [id])
+  AuthorId   String
+  ISBN       String
+  BookGenres BookGenre[]
+  Renter     Member      @relation(fields: [RenterId], references: [id])
+  RenterId   String
 }
 
 model Author {
@@ -37,11 +38,11 @@ model Genre {
 }
 
 model Member {
-  id          String        @id @default(cuid())
-  Name        String
-  Email       String
-  Address     String
-  BookRentals BookRentals[]
+  id      String @id @default(cuid())
+  Name    String
+  Email   String
+  Address String
+  Book    Book[]
 }
 
 model BookGenre {
@@ -50,12 +51,4 @@ model BookGenre {
   Genre   Genre  @relation(fields: [GenreId], references: [id])
   BookId  String
   GenreId String
-}
-
-model BookRentals {
-  id       String @id @default(cuid())
-  Book     Book   @relation(fields: [BookId], references: [id])
-  Member   Member @relation(fields: [MemberId], references: [id])
-  BookId   String
-  MemberId String
 }
